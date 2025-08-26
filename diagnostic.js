@@ -2,7 +2,7 @@ function outputTable(rows, cols) {
     const lastRowLen = [];
     const resRows = [];
 
-    for (let i = rows; i > 0; i--) {
+    for (let i = 1; i <= cols; i++) {
         const currentRows = [];
         for (let j = 1; j <= cols; j++) {
             if (i === rows) lastRowLen.push((j * i).toString().length);
@@ -10,7 +10,6 @@ function outputTable(rows, cols) {
         }
         resRows.push(currentRows);
     }
-    resRows.reverse();
 
     for (let i = 0; i < rows; i++) {
         let resString = "";
