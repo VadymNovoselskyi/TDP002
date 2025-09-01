@@ -1,3 +1,4 @@
+import os
 from uppg2b import *
 
 
@@ -17,7 +18,7 @@ def main():
 """
             )
         )
-        print('\n')
+        os.system("clear")
         if option == 1:
             shopping_list(slist)
         if option == 2:
