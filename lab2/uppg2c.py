@@ -19,18 +19,22 @@ def main():
             )
         )
         os.system("clear")
-        if option == 1:
-            shopping_list(slist)
-        if option == 2:
-            shopping_add(slist)
-        if option == 3:
-            shopping_remove(slist)
-        if option == 4:
-            shopping_edit(slist)
-        if option == 5:
-            print("Hejdå!")
-            break
-        print('\n')
+
+        match option:
+            case 1:
+                shopping_list(slist)
+            case 2:
+                shopping_add(slist)
+            case 3:
+                shopping_remove(slist)
+            case 4:
+                shopping_edit(slist)
+            case 5:
+                print("Hejdå!")
+                break
+            case _:
+                print("Invalid input")
+        print("\n")
 
 
 if __name__ == "__main__":

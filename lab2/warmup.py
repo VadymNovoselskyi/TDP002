@@ -1,3 +1,4 @@
+# 1
 # def main():
 #     numbers = [1, 2, 3]
 #     numbers_refernce = numbers
@@ -6,6 +7,7 @@
 # if __name__=="__main__":
 #     main()
 
+# 2
 # def main():
 #     numbers = [1, 2, 3]
 #     numbers_refernce = numbers.copy()
@@ -14,6 +16,7 @@
 # if __name__=="__main__":
 #     main()
 
+# 3
 # def main():
 #     numbers = [1, 2, 3, 4]
 #     print(add_element(numbers, 0))
@@ -26,6 +29,7 @@
 # if __name__=="__main__":
 #     main()
 
+# 4
 def main():
     numbers = [1, 2, 3]
     print(add_element([1, 2, 3, 4], 0))
