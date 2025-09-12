@@ -1,10 +1,8 @@
+from pprint import pprint
 import random
 
 suits = ["hearts", 'spades']
 values = {
-    "Jack": 11, 
-    "Queen": 12, 
-    "King": 13, 
     "Ace": 1, 
     "2": 2, 
     "3": 3, 
@@ -14,95 +12,99 @@ values = {
     "7": 7, 
     "8": 8, 
     "9": 9, 
-    "10": 10
+    "10": 10,
+    "Jack": 11, 
+    "Queen": 12, 
+    "King": 13, 
 }
 
-def create_cards():
-    cards = []
+def create_deck():
+    deck = []
     for suit in suits:
         for key, value in values.items():
-            card = {"name": f"{key} of {suit}", "suit": suit, "value_name": key, "value": value }
-            cards.append(card)
+            card = {"name": f"{key} of {suit}", "suit": suit, "value": key, "numerical_value": value }
+            deck.append(card)
 
-    cards.append({"name": "Joker A", "suit": "A", "value_name": "Joker", "value": 9999})
-    cards.append({"name": "Joker B", "suit": "B", "value_name": "Joker", "value": 9999})
-    return cards
+    deck.append({"name": "Joker A", "suit": "A", "value": "Joker", "numerical_value": 9999})
+    deck.append({"name": "Joker B", "suit": "B", "value": "Joker", "numerical_value": 9999})
+    return deck
 
-def count_cards(cards): 
-    return len(cards)
+def count_cards(deck): 
+    return len(deck)
 
-def randomize_cards(cards):
-    for i in range(len(cards)):
-        random_index = random.randint(0, len(cards) - 1)
-        temp = cards[i]
-        cards[i] = cards[random_index]
-        cards[random_index] = temp
-    # return cards
+def shuffle_deck(deck):
+    for i in range(len(deck)):
+        random_index = random.randint(0, len(deck) - 1)
+        temp = deck[i]
+        deck[i] = deck[random_index]
+        deck[random_index] = temp
+    # return deck
 
-def copy_cards(cards):
-    return cards.copy()
+def copy_deck(deck):
+    return deck.copy()
 
 def get_card_info(card):
-    return {"suit": card.get("suit"), "value_name": card.get("value_name")}
+    return {"suit": card.get("suit"), "value": card.get("value")}
 
-def get_card_at(cards, index):
-    return cards[index]
+def get_card_at(deck, index):
+    return deck[index]
 
-def get_card(cards, card_info): 
-    for i in range(len(cards)):
-        if cards[i].get("suit") == card_info.get("suit") and cards[i].get("value_name") == card_info.get("value_name"):
+def get_card_index(deck, card_name): 
+    for i in range(len(deck)):
+        if deck[i].get("name") == card_name:
             return i
 
-def remove_index(cards, index):
-    if index < len(cards):
-        cards.pop(index)
+def remove_index(deck, index):
+    if index < len(deck):
+        deck.pop(index)
         
-def cut_cards(cards, index):
-    return [cards[:index+1], cards[index+1:]]
+def cut_deck(deck, index):
+    return [deck[:index+1], deck[index+1:]]
 
-def compose_cards(cards1, cards2):
-    cards1.extend(cards2)
-    return cards1
+def compose_deck(_deck1, deck2):
+    deck1 = copy_deck(_deck1)
+    deck1.extend(deck2)
+    return deck1
 
 if __name__ == "__main__":
 
-    # Create cards
-    cards = create_cards()
-    # print(cards)
+    # Create deck
+    deck = create_deck()
+    # pprint(deck)
 
-    # Count cards
-    # print(count_cards(cards))
+    # Count deck
+    # pprint(count_deck(deck))
 
-    # Randomize cards
-    # randomize_cards(cards)
-    # print(cards)
+    # Randomize deck
+    # randomize_deck(deck)
+    # pprint(deck)
 
-    # Copy cards
-    # new_cards = copy_cards(cards)
-    # print(new_cards)
+    # Copy deck
+    # new_deck = copy_deck(deck)
+    # pprint(new_deck)
 
     # Getting card by index and card info
-    # card_info = get_card_info(get_card_at(cards, 2))
-    # print(card_info)
+    # card_info = get_card_info(get_card_at(deck, 2))
+    # pprint(card_info)
 
     # Getting card info
-    # card_index = get_card(cards, card_info)
-    # print(card_index)
+    # card_index = get_card(deck, "Joker A")
+    # pprint(card_index)
 
     # Removing a card
-    # remove_index(cards, 2)
-    # remove_index(cards, 40)
-    # card_info = get_card_info(get_card_at(cards, 2))
-    # print(card_info)
+    # remove_index(deck, 2)
+    # remove_index(deck, 40)
+    # card_info = get_card_info(get_card_at(deck, 2))
+    # pprint(card_info)
 
-    # Cutting cards
-    cards1, cards2 = cut_cards(cards, 10)
-    # cards1, cards2 = cut_cards(cards, 27)
-    # cards1, cards2 = cut_cards(cards, 40)
-    # cards1, cards2 = cut_cards(cards, 0)
-    # print(len(cards1))
-    # print(len(cards2))
+    # Cutting deck
+    # deck1, deck2 = cut_deck(deck, 10)
+    # deck1, deck2 = cut_deck(deck, 27)
+    # deck1, deck2 = cut_deck(deck, 40)
+    # deck1, deck2 = cut_deck(deck, 0)
+    # pprint(len(deck1))
+    # pprint(len(deck2))
 
-    # Composing cards
-    composed_cards = compose_cards(cards2, cards1)
-    print(composed_cards)
+    # Composing deck
+    # composed_deck = compose_deck(deck2, deck1)
+    # pprint(composed_deck)
