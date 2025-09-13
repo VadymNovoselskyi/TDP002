@@ -70,7 +70,7 @@ def get_symbol(board, x, y):
     entity_type = board["all"][(x, y)]
     match entity_type:
         case "player": return "@"
-        case "box": return "0"
+        case "box": return "o"
         case "wall": return "#"
         case "goal": return "."
         case ["goal", "player"]: return "+"
