@@ -39,9 +39,9 @@ def sokoban_load(file_name):
     return board
 
 if __name__ == "__main__":
-    board = sokoban_load("first_lvl.txt")
-    uppgA.sokoban_display(board)
+    first_lvl = sokoban_load("first_lvl.txt")
+    uppgA.sokoban_display(first_lvl)
     print("\n\n")
 
-    board = sokoban_load("second_lvl.txt")
-    uppgA.sokoban_display(board)
+    second_lvl = sokoban_load("second_lvl.txt")
+    uppgA.sokoban_display(second_lvl)

@@ -1,78 +1,76 @@
 def is_player(board, x, y):
-    return {"x": x, "y": y} == board["player"]
+    return (x, y) in board and "player" in board[(x, y)]
 
 def is_box(board, x, y):
-    return (x, y) in board["boxes"]
+    return (x, y) in board and "box" in board[(x, y)]
 
 def is_wall(board, x, y):
-    return (x, y) in board["walls"]
+    return (x, y) in board and "wall" in board[(x, y)]
 
 def is_goal(board, x, y):
-    return (x, y) in board["goals"]
+    return (x, y) in board and "goal" in board[(x, y)]
+def is_empty_goal(board, x, y):
+    return is_goal(board, x, y) and not (is_player(board, x, y) or is_box(board, x, y))
+
+def get_player_position(board):
+    for (x, y) in board.keys():
+        if is_player(board, x, y):
+            return x, y
 
 def create_board():
-    player = {"x": -1, "y": -1}
-    boxes = {}
-    walls = {}
-    goals = {}
-    all = {}
-    return {"player": player, "boxes": boxes, "walls": walls, "goals": goals, "all": all}
+    return {}
 
 def create_player(board, x, y):
-    if (x, y) in board["all"] and not board["all"][(x, y)] == "goal":
-        raise Exception(f"Adding a player onto entity: x: {x}; y: {y}; {board["all"][(x, y)]}, {board}")
+    if (x, y) in board and not is_empty_goal(board, x, y):
+        raise Exception(f"Adding a player onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}")
 
-    board["player"] = {"x": x, "y": y}
     if is_goal(board, x, y):
-        board["all"][(x, y)] = ["goal", "player"]
+        board[(x, y)] = ["goal", "player"]
         return
-    board["all"][(x, y)] = "player"
+    board[(x, y)] = "player"
 
 def add_box(board, x, y):
-    if (x, y) in board["all"] and not board["all"][(x, y)] == "goal":
-        raise Exception(f"Adding a box onto entity: x: {x}; y: {y}; {board["all"][(x, y)]}, {board}")
+    if (x, y) in board and not is_empty_goal(board, x, y):
+        raise Exception(f"Adding a box onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}")
 
-    board["boxes"][(x, y)] = True
     if is_goal(board, x, y):
-        board["all"][(x, y)] = ["goal", "box"]
+        board[(x, y)] = ["goal", "box"]
         return
-    board["all"][(x, y)] = "box"
+    board[(x, y)] = "box"
 
 def add_goal(board, x, y):
-    if (x, y) in board["all"] and not (is_player(board, x, y) or is_box(board, x, y)):
-        raise Exception(f"Adding a goal onto entity: x: {x}; y: {y}; {board["all"][(x, y)]}, {board}")
+    if (x, y) in board and not (is_player(board, x, y) or is_box(board, x, y)):
+        raise Exception(f"Adding a goal onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}")
 
-    board["goals"][(x, y)] = True
     if is_player(board, x, y):
-        board["all"][(x, y)] = ["goal", "player"]
+        board[(x, y)] = ["goal", "player"]
     elif is_box(board, x, y):
-        board["all"][(x, y)] = ["goal", "box"]
-    else: board["all"][(x, y)] = "goal"
+        board[(x, y)] = ["goal", "box"]
+    else: board[(x, y)] = ["goal"]
 
 def add_wall(board, x, y):
-    if (x, y) in board["all"]:
-        raise Exception(f"Adding a wall onto existing entity: x: {x}; y: {y}; {board["all"][(x, y)]}, {board}")
+    if (x, y) in board:
+        raise Exception(f"Adding a wall onto existing entity: x: {x}; y: {y}; {board[(x, y)]}, {board}")
 
-    board["walls"][(x, y)] = True
-    board["all"][(x, y)] = "wall"
+    board[(x, y)] = "wall"
 
 def get_max_coords(board):
     max_x = 0
     max_y = 0
-    for (x, y) in board["all"].keys():
+    for (x, y) in board.keys():
         max_x = max(max_x, x)
         max_y = max(max_y, y)
     return max_x, max_y
 
 def get_symbol(board, x, y):
-    if not (x, y) in board["all"]:
+    if not (x, y) in board:
         return " "
-    entity_type = board["all"][(x, y)]
+    entity_type = board[(x, y)]
     match entity_type:
         case "player": return "@"
         case "box": return "o"
         case "wall": return "#"
-        case "goal": return "."
+        case ["goal"]: return "."
         case ["goal", "player"]: return "+"
         case ["goal", "box"]: return "*"
         case e: raise Exception(f"Unknown entity_type: {e}")
