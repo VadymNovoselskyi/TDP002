@@ -16,6 +16,24 @@ def get_player_position(board):
     for (x, y) in board.keys():
         if is_player(board, x, y):
             return x, y
+        
+def move_entity(board, entity_type, x, y, dx, dy):
+    if entity_type == "player" and not is_player(board, x, y):
+        raise Exception(f"Trying to move the player from a position it's not on")
+    if entity_type == "box" and not is_box(board, x, y):
+        raise Exception(f"Trying to move the box from a position it's not on")
+
+    if is_goal(board, x, y):
+        board[(x, y)] = ["goal"]
+    else:
+        del board[(x, y)]
+    
+    if is_goal(board, x + dx, y + dy):
+        board[(x + dx, y + dy)] = ["goal", entity_type]
+    else:
+        board[(x + dx, y + dy)] = entity_type
+    
+
 
 def create_board():
     return {}
