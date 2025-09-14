@@ -16,6 +16,27 @@ def get_player_position(board):
     for (x, y) in board.keys():
         if is_player(board, x, y):
             return x, y
+
+def get_boxes_coords(board):
+    coords = {}
+    for (x, y) in board.keys():
+        if is_box(board, x, y):
+            coords[(x, y)] = True
+    return coords
+
+def get_walls_coords(board):
+    coords = {}
+    for (x, y) in board.keys():
+        if is_wall(board, x, y):
+            coords[(x, y)] = True
+    return coords
+
+def get_goals_coords(board):
+    coords = {}
+    for (x, y) in board.keys():
+        if is_goal(board, x, y):
+            coords[(x, y)] = True
+    return coords
         
 def move_entity(board, entity_type, x, y, dx, dy):
     if entity_type == "player" and not is_player(board, x, y):
