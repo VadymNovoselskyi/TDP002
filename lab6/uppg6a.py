@@ -8,15 +8,17 @@
 #     total_sum += i
 # print(total_sum)
 
+
 def my_reduce(list, func, acc):
     for item in list:
         acc = func(acc, item)
     return acc
 
+
 nums = [x for x in range(1, 513)]
 
-sum = my_reduce(nums, lambda acc, num : acc + num, 0)
+sum = my_reduce(nums, lambda acc, num: acc + num, 0)
 # print(sum)
 
-mul = my_reduce(nums, lambda acc, num : acc * num, 1)
+mul = my_reduce(nums, lambda acc, num: acc * num, 1)
 print(mul)

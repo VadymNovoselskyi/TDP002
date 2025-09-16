@@ -1,16 +1,16 @@
 import uppg5a as uppgA
 
-    #####
-    #   #
-    #o  #
-  ###  o##
-  #  o o #
+#####
+#   #
+# o  #
+###  o##
+#  o o #
 ### # ## #   ######
 #   # ## #####  ..#
 # o  o          ..#
 ##### ### #@##  ..#
-    #     #########
-    #######
+#     #########
+#######
 
 
 def sokoban_load(file_name):
@@ -37,6 +37,7 @@ def sokoban_load(file_name):
                 y += 1
             x += 1
     return board
+
 
 if __name__ == "__main__":
     first_lvl = sokoban_load("first_lvl.txt")

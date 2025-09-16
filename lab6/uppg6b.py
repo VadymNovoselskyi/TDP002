@@ -1,10 +1,11 @@
 db = [
-{'name': 'Jakob', 'position': 'assistant'},
-{'name': 'Åke', 'position': 'assistant'},
-{'name': 'Ola', 'position': 'examiner'},
-{'name': 'Ola2', 'position': 'examiner'},
-{'name': 'Henrik', 'position': 'assistant'}
+    {"name": "Jakob", "position": "assistant"},
+    {"name": "Åke", "position": "assistant"},
+    {"name": "Ola", "position": "examiner"},
+    {"name": "Ola2", "position": "examiner"},
+    {"name": "Henrik", "position": "assistant"},
 ]
+
 
 def db_search(db, field, value):
     matched = []
@@ -14,4 +15,5 @@ def db_search(db, field, value):
 
     return matched
 
-print(db_search(db, 'position', 'examiner'))
+
+print(db_search(db, "position", "examiner"))

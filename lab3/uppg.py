@@ -1,7 +1,7 @@
-from socket import error
 import requests
 
-BASE_URL = 'https://www.ida.liu.se/~TDP002/pokeapi/'
+BASE_URL = "https://www.ida.liu.se/~TDP002/pokeapi/"
+
 
 def do_request(url):
     response = requests.get(f"{BASE_URL}/{url}/")
@@ -11,15 +11,18 @@ def do_request(url):
 
     return response.json()
 
+
 def get_pokemon_info(pokemons_data, pokemon_name):
     url = None
     for info in pokemons_data:
         if info["name"] == pokemon_name:
             url = info["url"]
-    
+            break
+
     if url is None:
-        raise Exception(f"Pokemon \"{pokemon_name}\" doesn't exist")
+        raise Exception(f'Pokemon "{pokemon_name}" doesn\'t exist')
     return do_request(url)
+
 
 def get_ability_flavor_text(url):
     flavor_text_entries = do_request(url)["flavor_text_entries"]
@@ -28,11 +31,11 @@ def get_ability_flavor_text(url):
     for flavor_text_entry in flavor_text_entries:
         if flavor_text_entry["language"]["name"] == "en":
             flavor_text = flavor_text_entry["flavor_text"]
+            break
 
     if flavor_text is None:
         raise Exception(f"Cound't find flavor_text in english for {url}")
     return flavor_text
-
 
 
 def main():

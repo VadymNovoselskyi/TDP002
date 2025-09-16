@@ -1,36 +1,48 @@
 from pprint import pprint
 import random
 
-suits = ["hearts", 'spades']
+suits = ["hearts", "spades"]
 values = {
-    "Ace": 1, 
-    "2": 2, 
-    "3": 3, 
-    "4": 4, 
-    "5": 5, 
-    "6": 6, 
-    "7": 7, 
-    "8": 8, 
-    "9": 9, 
+    "Ace": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
     "10": 10,
-    "Jack": 11, 
-    "Queen": 12, 
-    "King": 13, 
+    "Jack": 11,
+    "Queen": 12,
+    "King": 13,
 }
+
 
 def create_deck():
     deck = []
     for suit in suits:
         for key, value in values.items():
-            card = {"name": f"{key} of {suit}", "suit": suit, "value": key, "numerical_value": value }
+            card = {
+                "name": f"{key} of {suit}",
+                "suit": suit,
+                "value": key,
+                "numerical_value": value,
+            }
             deck.append(card)
 
-    deck.append({"name": "Joker A", "suit": "A", "value": "Joker", "numerical_value": 9999})
-    deck.append({"name": "Joker B", "suit": "B", "value": "Joker", "numerical_value": 9999})
+    deck.append(
+        {"name": "Joker A", "suit": "A", "value": "Joker", "numerical_value": 9999}
+    )
+    deck.append(
+        {"name": "Joker B", "suit": "B", "value": "Joker", "numerical_value": 9999}
+    )
     return deck
 
-def count_cards(deck): 
+
+def count_cards(deck):
     return len(deck)
+
 
 def shuffle_deck(deck):
     for i in range(len(deck)):
@@ -40,31 +52,39 @@ def shuffle_deck(deck):
         deck[random_index] = temp
     # return deck
 
+
 def copy_deck(deck):
     return deck.copy()
 
+
 def get_card_info(card):
-    return {"suit": card.get("suit"), "value": card.get("value")}
+    return card.get("suit"), card.get("value"), card.get("numerical_value")
+
 
 def get_card_at(deck, index):
     return deck[index]
 
-def get_card_index(deck, card_name): 
+
+def get_card_index(deck, card_name):
     for i in range(len(deck)):
         if deck[i].get("name") == card_name:
             return i
 
+
 def remove_index(deck, index):
     if index < len(deck):
         deck.pop(index)
-        
+
+
 def cut_deck(deck, index):
-    return [deck[:index+1], deck[index+1:]]
+    return [deck[: index + 1], deck[index + 1 :]]
+
 
 def compose_deck(_deck1, deck2):
     deck1 = copy_deck(_deck1)
     deck1.extend(deck2)
     return deck1
+
 
 if __name__ == "__main__":
 

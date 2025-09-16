@@ -19,5 +19,5 @@ def shopping_remove(slist):
 
 def shopping_edit(slist):
     edit_index = int(input("Which index to edit: ")) - 1
-    edit_value = input(f"What should be in place of \"{slist[edit_index]}\": ")
+    edit_value = input(f'What should be in place of "{slist[edit_index]}": ')
     slist[edit_index] = edit_value
