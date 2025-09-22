@@ -1,17 +1,29 @@
-def quick_sort(db, func=lambda a: a):
-    for i in range(len(db)):
-        element = func(db[i])
+def quick_sort(array: list, func=lambda a: a):
+    if len(array) < 2:
+        return array
 
-        j = i - 1
-        while (
-            element < func(db[j]) or (element == func(db[j]) and db[j + 1] < db[j])
-        ) and j >= 0:
-            temp = db[j]
-            db[j] = db[j + 1]
-            db[j + 1] = temp
-            j -= 1
+    pivot_index = int(len(array) / 2)
+    left_part = []
+    middle_part = []
+    right_part = []
+    for element in array:
+        if func(element) < func(array[pivot_index]):
+            left_part.append(element)
+        elif func(element) > func(array[pivot_index]):
+            right_part.append(element)
+        else:
+            if element < array[pivot_index]:
+                left_part.append(element)
+            elif element > array[pivot_index]:
+                right_part.append(element)
+            else:
+                middle_part.append(element)
 
-    return db
+    return [
+        *quick_sort(left_part, func),
+        *middle_part,
+        *quick_sort(right_part, func),
+    ]
 
 
 db = [
