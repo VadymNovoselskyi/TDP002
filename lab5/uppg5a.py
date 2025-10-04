@@ -10,12 +10,12 @@ def is_wall(board, x, y):
     return (x, y) in board and "wall" in board[(x, y)]
 
 
-def is_goal(board, x, y):
-    return (x, y) in board and "goal" in board[(x, y)]
+def has_storage(board, x, y):
+    return (x, y) in board and "storage" in board[(x, y)]
 
 
-def is_empty_goal(board, x, y):
-    return is_goal(board, x, y) and not (is_player(board, x, y) or is_box(board, x, y))
+def is_empty_storage(board, x, y):
+    return has_storage(board, x, y) and not (is_player(board, x, y) or is_box(board, x, y))
 
 
 def get_player_position(board):
@@ -43,7 +43,7 @@ def get_walls_coords(board):
 def get_goals_coords(board):
     coords = {}
     for x, y in board.keys():
-        if is_goal(board, x, y):
+        if has_storage(board, x, y):
             coords[(x, y)] = True
     return coords
 
@@ -54,13 +54,13 @@ def move_entity(board, entity_type, x, y, dx, dy):
     if entity_type == "box" and not is_box(board, x, y):
         raise Exception(f"Trying to move the box from a position it's not on")
 
-    if is_goal(board, x, y):
-        board[(x, y)] = ["goal"]
+    if has_storage(board, x, y):
+        board[(x, y)] = ["storage"]
     else:
         del board[(x, y)]
 
-    if is_goal(board, x + dx, y + dy):
-        board[(x + dx, y + dy)] = ["goal", entity_type]
+    if has_storage(board, x + dx, y + dy):
+        board[(x + dx, y + dy)] = ["storage", entity_type]
     else:
         board[(x + dx, y + dy)] = entity_type
 
@@ -70,41 +70,39 @@ def create_board():
 
 
 def create_player(board, x, y):
-    if (x, y) in board and not is_empty_goal(board, x, y):
+    if (x, y) in board and not is_empty_storage(board, x, y):
         raise Exception(
             f"Adding a player onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}"
         )
 
-    if is_goal(board, x, y):
-        board[(x, y)] = ["goal", "player"]
+    if has_storage(board, x, y):
+        board[(x, y)].append("storage")
         return
     board[(x, y)] = "player"
 
 
 def add_box(board, x, y):
-    if (x, y) in board and not is_empty_goal(board, x, y):
+    if (x, y) in board and not is_empty_storage(board, x, y):
         raise Exception(
             f"Adding a box onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}"
         )
 
-    if is_goal(board, x, y):
-        board[(x, y)] = ["goal", "box"]
+    if has_storage(board, x, y):
+        board[(x, y)].append("storage")
         return
     board[(x, y)] = "box"
 
 
-def add_goal(board, x, y):
+def add_storage(board, x, y):
     if (x, y) in board and not (is_player(board, x, y) or is_box(board, x, y)):
         raise Exception(
-            f"Adding a goal onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}"
+            f"Adding a storage onto entity: x: {x}; y: {y}; {board[(x, y)]}, {board}"
         )
 
-    if is_player(board, x, y):
-        board[(x, y)] = ["goal", "player"]
-    elif is_box(board, x, y):
-        board[(x, y)] = ["goal", "box"]
+    if is_player(board, x, y) or is_box(board, x, y):
+        board[(x, y)].append("storage")
     else:
-        board[(x, y)] = ["goal"]
+        board[(x, y)] = ["storage"]
 
 
 def add_wall(board, x, y):
@@ -136,11 +134,11 @@ def get_symbol(board, x, y):
             return "o"
         case "wall":
             return "#"
-        case ["goal"]:
+        case ["storage"]:
             return "."
-        case ["goal", "player"]:
+        case ["storage", "player"]:
             return "+"
-        case ["goal", "box"]:
+        case ["storage", "box"]:
             return "*"
         # case e: raise Exception(f"Unknown entity_type: {e}")
 
@@ -159,10 +157,10 @@ if __name__ == "__main__":
     create_player(board, 0, 0)
     add_box(board, 1, 1)
     add_wall(board, 2, 2)
-    add_goal(board, 3, 3)
+    add_storage(board, 3, 3)
 
     add_box(board, 6, 6)
-    add_goal(board, 6, 6)
+    add_storage(board, 6, 6)
     create_player(board, 7, 7)
-    add_goal(board, 7, 7)
+    add_storage(board, 7, 7)
     sokoban_display(board)

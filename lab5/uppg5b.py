@@ -27,13 +27,13 @@ def sokoban_load(file_name):
                 elif char == "#":
                     uppgA.add_wall(board, x, y)
                 elif char == ".":
-                    uppgA.add_goal(board, x, y)
+                    uppgA.add_storage(board, x, y)
                 elif char == "+":
                     uppgA.create_player(board, x, y)
-                    uppgA.add_goal(board, x, y)
+                    uppgA.add_storage(board, x, y)
                 elif char == "*":
                     uppgA.add_box(board, x, y)
-                    uppgA.add_goal(board, x, y)
+                    uppgA.add_storage(board, x, y)
                 y += 1
             x += 1
     return board
